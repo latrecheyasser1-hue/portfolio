@@ -18,7 +18,9 @@ import {
   X,
   SendHorizontal,
   ShoppingBag,
-  Globe
+  Globe,
+  Plus,
+  Minus
 } from 'lucide-react';
 
 // Custom Official SVGs for Tech Stack Icons
@@ -269,6 +271,7 @@ const ProfileCard3D = ({ onMouseEnter, onMouseLeave }) => {
 export default function App() {
   const [activeTab, setActiveTab] = useState('all');
   const [cursorState, setCursorState] = useState('normal'); // 'normal', 'link', 'project', 'button', 'profile'
+  const [openFaq, setOpenFaq] = useState(null);
   
   // Custom Smooth Cursor logic
   const cursorRef = useRef(null);
@@ -519,6 +522,29 @@ export default function App() {
       url: "#",
       tags: ["Custom Systems", "Education ERP", "Vitrine Websites"],
       featured: false
+    }
+  ];
+
+  const faqItems = [
+    {
+      question: "What types of projects do you specialize in?",
+      answer: "I specialize in building high-converting E-Commerce stores, custom Web Platforms (SaaS), and tailormade Desktop Management Software (ERP/POS systems) built for speed and business growth."
+    },
+    {
+      question: "Which technologies do you use for development?",
+      answer: "I build modern web apps using React, Next.js, Vite, and Tailwind CSS. For databases, I use highly scalable cloud solutions like PostgreSQL and Supabase. For desktop platforms, I utilize Electron.js and Java."
+    },
+    {
+      question: "How do you determine the pricing and timeline for a project?",
+      answer: "Pricing and timeline depend entirely on the scope and features of your project. After a brief discovery meeting, I will provide a detailed quote and break down the project into clear milestones with weekly progress updates."
+    },
+    {
+      question: "Do you offer maintenance and support after delivery?",
+      answer: "Yes, every project comes with a dedicated free support and maintenance period (usually 30 days) to resolve any technical issues. Ongoing monthly maintenance and server optimization support is also available."
+    },
+    {
+      question: "How does the workflow and communication look like?",
+      answer: "We collaborate step-by-step. I show you progress through interactive staging links at each milestone. We communicate regularly via Telegram, Email, or WhatsApp to ensure the final product perfectly aligns with your expectations."
     }
   ];
 
@@ -994,6 +1020,63 @@ export default function App() {
             </ScrollReveal>
           </div>
 
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-32 px-6 max-w-4xl mx-auto space-y-16">
+        <div className="text-center space-y-4">
+          <ScrollReveal className="space-y-4">
+            <h3 className="text-4xl sm:text-6xl font-bold text-black dark:text-white tracking-tight leading-[1.1]">
+              <div className="block py-1">
+                <TextReveal text="Frequently Asked" />
+              </div>
+              <div className="block py-1">
+                <TextReveal text="Questions" className="text-zinc-400 dark:text-zinc-505" delay={100} />
+              </div>
+            </h3>
+            <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-md mx-auto">
+              Got questions? I've got answers to help you get started.
+            </p>
+          </ScrollReveal>
+        </div>
+
+        <div className="space-y-4">
+          {faqItems.map((item, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <ScrollReveal 
+                key={idx}
+                delay={idx * 80}
+                className="border-b border-zinc-100 dark:border-zinc-800/80 pb-2"
+              >
+                <button
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  onMouseEnter={onMouseEnterLink}
+                  onMouseLeave={onMouseLeaveLink}
+                  className="w-full flex items-center justify-between py-6 text-left text-black dark:text-white group transition-colors"
+                >
+                  <span className="text-base sm:text-lg font-bold tracking-tight pr-4">
+                    {item.question}
+                  </span>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all duration-300">
+                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  </div>
+                </button>
+                <div 
+                  className={`grid transition-all duration-300 ease-in-out ${
+                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="pb-6 pr-12 text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-normal">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            );
+          })}
         </div>
       </section>
 
