@@ -457,8 +457,7 @@ export default function App() {
       description: "Engineered from A to Z. A complete medical clinic management and workflow optimization SaaS platform designed for high performance and reliability.",
       url: "https://clinicflowdz.com",
       tags: ["SaaS", "Full-Stack", "Cloud Database", "Architecture"],
-      featured: true,
-      badge: "Built A to Z"
+      featured: true
     },
     {
       id: 2,
@@ -875,11 +874,6 @@ export default function App() {
                       {project.title}
                     </h4>
                   </div>
-                  {project.badge && (
-                    <span className="px-3.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest bg-black dark:bg-white text-white dark:text-black">
-                      {project.badge}
-                    </span>
-                  )}
                 </div>
 
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-normal">
