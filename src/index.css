@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    cursor: none; /* Hide default cursor to use Cuberto Custom Cursor */
+  }
+  
+  body {
+    background-color: #ffffff;
+    color: #000000;
+    overflow-x: hidden;
+    cursor: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  
+  html.dark body {
+    background-color: #09090b;
+    color: #ffffff;
+  }
+  
+  a, button {
+    cursor: none;
+  }
+}
+
+/* Custom Cuberto Mouse Follower - Difference Blend Mode */
+.mouse-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.mouse-follower-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: #ffffff; /* White bg combined with mix-blend-mode: difference makes it appear black on white, and white on black! */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  mix-blend-mode: difference;
+}
+
+/* Scroll Reveal Classes */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 1.1s cubic-bezier(0.215, 0.61, 0.355, 1), transform 1.1s cubic-bezier(0.25, 1, 0.25, 1);
+  will-change: transform, opacity;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Cuberto Text Reveal Mask & Animation - FIXED clipping of descenders/ascenders globally */
+.text-reveal-wrapper {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  padding-bottom: 0.22em; /* Safe bottom breathing space for letters like y, p, g, j, q */
+  margin-bottom: -0.22em; /* Pull baseline back to normal position */
+  padding-top: 0.1em;     /* Safe top breathing space for uppercase curves like S, T, h */
+  margin-top: -0.1em;     /* Compensate top padding */
+}
+
+.text-reveal-item {
+  display: inline-block;
+  transform: translateY(115%) rotate(3deg);
+  transition: transform 1.28s cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: transform;
+}
+
+.text-reveal-wrapper.is-visible .text-reveal-item {
+  transform: translateY(0) rotate(0);
+}
+
+/* 3D Elastic Entry Animation for Profile Image */
+@keyframes profileEntrance {
+  0% {
+    transform: perspective(1200px) scale(0.2) rotateX(30deg) rotateY(-40deg) translateY(200px);
+    opacity: 0;
+  }
+  60% {
+    transform: perspective(1200px) scale(1.05) rotateX(-5deg) rotateY(8deg) translateY(-10px);
+    opacity: 0.9;
+  }
+  80% {
+    transform: perspective(1200px) scale(0.98) rotateX(2deg) rotateY(-3deg) translateY(3px);
+    opacity: 1;
+  }
+  100% {
+    transform: perspective(1200px) scale(1) rotateX(0deg) rotateY(0deg) translateY(0);
+    opacity: 1;
+  }
+}
+
+.profile-card-3d-entrance {
+  animation: profileEntrance 1.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Glassmorphism utility for Light Theme */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Navbar Load Animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-navbar-load {
+  animation: slideDown 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Spinning Monogram Logo Animation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+  transform-origin: center;
+}
+
+/* Speed up spin when parent group is hovered */
+.group:hover .animate-spin-slow {
+  animation-duration: 5s;
+}
+
+/* Hero Paragraph Staggered Entrance Animation */
+@keyframes heroParagraphReveal {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-paragraph {
+  opacity: 0;
+  animation: heroParagraphReveal 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
